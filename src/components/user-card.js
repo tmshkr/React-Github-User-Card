@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "../config";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Button } from "reactstrap";
 import GitHubCalendar from "github-calendar";
@@ -61,8 +60,8 @@ class UserCard extends Component {
                 </li>
               )}
             </ul>
+            {bio && <p className="bio">{bio}</p>}
           </div>
-          {bio && <p>{bio}</p>}
         </CardBody>
         <div className={`calendar ${login}`}>
           <Button outline color="primary" size="lg" onClick={this.showGraph}>

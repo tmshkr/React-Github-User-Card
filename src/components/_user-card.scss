@@ -4,6 +4,7 @@ div.user-card {
   margin-bottom: 1.5rem;
   .card-body {
     display: flex;
+    padding-bottom: 0;
   }
   img {
     width: 150px;
@@ -26,6 +27,11 @@ div.user-card {
     margin: 0;
     padding: 0;
   }
+
+  p.bio {
+    margin: 1rem 0;
+  }
+
   div.calendar {
     flex: 0 0 100%;
     border: none;
@@ -37,7 +43,7 @@ div.user-card {
 
     button {
       display: block;
-      margin: 1rem auto;
+      margin: 0 auto 1rem;
     }
   }
 }
