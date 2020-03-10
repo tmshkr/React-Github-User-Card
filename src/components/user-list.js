@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "../config";
+import axios from "axios";
 
 import UserCard from "./user-card";
 
