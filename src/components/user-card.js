@@ -13,22 +13,6 @@ class UserCard extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props);
-    const { match } = this.props;
-    if (match) {
-      const { username, list } = match.params;
-      switch (list) {
-        case "followers":
-          break;
-        case "following":
-          break;
-        default:
-          break;
-      }
-    }
-  }
-
   showGraph = () => {
     const { login } = this.props.user;
     new GitHubCalendar(`.${login}.calendar`, login, {
@@ -64,12 +48,18 @@ class UserCard extends Component {
                   <em>{location}</em>
                 </li>
               )}
-              <li>
-                Followers: <Link to={`/u/${login}/followers`}>{followers}</Link>
-              </li>
-              <li>
-                Following: <Link to={`/u/${login}/following`}>{following}</Link>
-              </li>
+              {followers && (
+                <li>
+                  Followers:{" "}
+                  <Link to={`/u/${login}/followers`}>{followers}</Link>
+                </li>
+              )}
+              {following && (
+                <li>
+                  Following:{" "}
+                  <Link to={`/u/${login}/following`}>{following}</Link>
+                </li>
+              )}
             </ul>
           </div>
           {bio && <p>{bio}</p>}
