@@ -62,7 +62,10 @@ class UserList extends Component {
     const { username, list } = this.props.match.params;
     axios
       .get(`https://api.github.com/users/${username}/${list}`)
-      .then(({ data }) => this.setState({ users: data }));
+      .then(({ data }) => this.setState({ users: data }))
+      .catch(err => {
+        console.dir(err);
+      });
   }
 
   render() {
