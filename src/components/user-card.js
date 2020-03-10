@@ -38,7 +38,12 @@ class UserCard extends Component {
           <img src={avatar_url} alt={login} />
           <div>
             <h2 className="card-title">{name}</h2>
-            <a className="profile-link" href={html_url} target="_blank">
+            <a
+              className="profile-link"
+              href={html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {login}
             </a>
             <ul>
