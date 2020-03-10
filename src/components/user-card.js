@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button
-} from "reactstrap";
+import { Card, CardBody, Button } from "reactstrap";
+import GitHubCalendar from "github-calendar";
+import "../../node_modules/github-calendar/dist/github-calendar-responsive.css";
 
 class UserCard extends Component {
+  showGraph = () => {
+    const { login } = this.props.user;
+    new GitHubCalendar(`.${login}.calendar`, login, {
+      responsive: true
+    });
+  };
   render() {
     const {
+      avatar_url,
+      bio,
       name,
       login,
       location,
@@ -19,18 +21,33 @@ class UserCard extends Component {
       followers,
       following
     } = this.props.user;
+
     return (
-      <Card>
+      <Card className="user-card">
         <CardBody>
-          <h2 className="card-title">{name}</h2>
-          <a href={html_url}>{login}</a>
-          <ul>
-            <li>Location: {location}</li>
-            <li>Followers: {followers}</li>
-            <li>Following: {following}</li>
-          </ul>
-          <Button color="primary">Button</Button>
+          <img src={avatar_url} alt={login} />
+          <div>
+            <h2 className="card-title">{name}</h2>
+            <a className="profile-link" href={html_url}>
+              {login}
+            </a>
+            <ul>
+              {location && (
+                <li>
+                  <em>{location}</em>
+                </li>
+              )}
+              <li>Followers: {followers}</li>
+              <li>Following: {following}</li>
+            </ul>
+          </div>
+          {bio && <p>{bio}</p>}
         </CardBody>
+        <div className={`calendar ${login}`}>
+          <Button outline color="primary" size="lg" onClick={this.showGraph}>
+            Show Graph
+          </Button>
+        </div>
       </Card>
     );
   }
