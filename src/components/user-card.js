@@ -1,16 +1,43 @@
 import React, { Component } from "react";
+import axios from "../config";
+import { Link } from "react-router-dom";
 import { Card, CardBody, Button } from "reactstrap";
 import GitHubCalendar from "github-calendar";
 import "../../node_modules/github-calendar/dist/github-calendar-responsive.css";
 
 class UserCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: props.user
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    const { match } = this.props;
+    if (match) {
+      const { username, list } = match.params;
+      switch (list) {
+        case "followers":
+          break;
+        case "following":
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   showGraph = () => {
     const { login } = this.props.user;
     new GitHubCalendar(`.${login}.calendar`, login, {
       responsive: true
     });
   };
+
   render() {
+    if (!this.state.user) return <h2>loading...</h2>;
     const {
       avatar_url,
       bio,
@@ -20,7 +47,7 @@ class UserCard extends Component {
       html_url,
       followers,
       following
-    } = this.props.user;
+    } = this.state.user;
 
     return (
       <Card className="user-card">
@@ -28,7 +55,7 @@ class UserCard extends Component {
           <img src={avatar_url} alt={login} />
           <div>
             <h2 className="card-title">{name}</h2>
-            <a className="profile-link" href={html_url}>
+            <a className="profile-link" href={html_url} target="_blank">
               {login}
             </a>
             <ul>
@@ -37,8 +64,12 @@ class UserCard extends Component {
                   <em>{location}</em>
                 </li>
               )}
-              <li>Followers: {followers}</li>
-              <li>Following: {following}</li>
+              <li>
+                Followers: <Link to={`/u/${login}/followers`}>{followers}</Link>
+              </li>
+              <li>
+                Following: <Link to={`/u/${login}/following`}>{following}</Link>
+              </li>
             </ul>
           </div>
           {bio && <p>{bio}</p>}

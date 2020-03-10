@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
 import axios from "./config";
 
 import UserCard from "./components/user-card";
@@ -6,7 +12,7 @@ import UserCard from "./components/user-card";
 class App extends Component {
   constructor() {
     super();
-    this.state = { users: [] };
+    this.state = { users: {} };
   }
 
   componentDidMount() {
@@ -24,8 +30,8 @@ class App extends Component {
         .get(`https://api.github.com/users/${username}`)
         .then(({ data }) => {
           console.log(data);
-          const users = [...this.state.users];
-          users.push(data);
+          const users = { ...this.state.users };
+          users[data.login] = data;
           this.setState({ users });
         })
         .catch(err => {
@@ -38,9 +44,17 @@ class App extends Component {
     const { users } = this.state;
     return (
       <main className="app">
-        {users.map(u => (
-          <UserCard key={u.login} user={u} />
-        ))}
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              {Object.values(users).map(u => (
+                <UserCard key={u.login} user={u} />
+              ))}
+            </Route>
+            <Route exact path="/u/:username/:list" component={UserCard} />
+            <Redirect to="/" />
+          </Switch>
+        </Router>
       </main>
     );
   }
