@@ -33,14 +33,14 @@ class UserList extends Component {
     const usernames = [
       "bigknell",
       "dustinmyers",
-      "jackskim",
+      "jskway",
       "justsml",
       "luishrd",
       "tetondan",
-      "tmshkr"
+      "tmshkr",
     ];
 
-    usernames.forEach(username => {
+    usernames.forEach((username) => {
       axios
         .get(`https://api.github.com/users/${username}`)
         .then(({ data }) => {
@@ -52,7 +52,7 @@ class UserList extends Component {
             this.setState({ users: [...this.defaultUsers] });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.dir(err);
         });
     });
@@ -63,7 +63,7 @@ class UserList extends Component {
     axios
       .get(`https://api.github.com/users/${username}/${list}`)
       .then(({ data }) => this.setState({ users: data }))
-      .catch(err => {
+      .catch((err) => {
         console.dir(err);
       });
   }
@@ -72,7 +72,7 @@ class UserList extends Component {
     const { users } = this.state;
     return (
       <>
-        {users.map(u => (
+        {users.map((u) => (
           <UserCard key={u.login} user={u} />
         ))}
       </>
